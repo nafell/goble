@@ -8,14 +8,22 @@ import (
 	"tinygo.org/x/bluetooth"
 
 	"github.com/nafell/goble_gateway/ble"
+	"github.com/nafell/goble_gateway/db"
 )
 
 var adapter = bluetooth.DefaultAdapter
 
 func main() {
+	fmt.Println("nanjakoryaaaaa")
 	for _, v := range os.Args {
+
 		if v == "--debug" {
 			slog.SetLogLoggerLevel(slog.LevelDebug)
+		}
+		if v == "--gen" {
+			slog.SetLogLoggerLevel(slog.LevelDebug)
+			fmt.Println("gen option")
+			gen()
 		}
 	}
 
@@ -27,6 +35,16 @@ func main() {
 	}
 
 	//read text from the console
+	for {
+		var text string
+		fmt.Scanln(&text)
+	}
+}
+
+func gen() {
+	slog.Info("Generating db interface...")
+	must("generate db interface", db.init())
+	slog,Info("Generated db interface.")
 	for {
 		var text string
 		fmt.Scanln(&text)
