@@ -8,6 +8,7 @@ import (
 	"tinygo.org/x/bluetooth"
 
 	"github.com/nafell/goble_gateway/ble"
+	"github.com/nafell/goble_gateway/dbstuff"
 )
 
 var adapter = bluetooth.DefaultAdapter
@@ -16,6 +17,12 @@ func main() {
 	for _, v := range os.Args {
 		if v == "--debug" {
 			slog.SetLogLoggerLevel(slog.LevelDebug)
+		}
+		if v == "--gen" {
+			slog.SetLogLoggerLevel(slog.LevelDebug)
+			slog.Debug("Generating database queries...")
+			must("Gen generate", dbstuff.Generate())
+			slog.Debug("Generated database queries.")
 		}
 	}
 
