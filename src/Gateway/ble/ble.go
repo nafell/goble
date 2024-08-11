@@ -2,6 +2,7 @@ package ble
 
 import (
 	"fmt"
+	"log/slog"
 
 	"tinygo.org/x/bluetooth"
 )
@@ -13,27 +14,23 @@ func Start() error {
 	// Enable BLE interface.
 	err := Enable()
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return err
 	}
 
 	// Start scanning.
 	esp32_scan, err := Scan()
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return err
 	}
 
 	// Connect to the device
 	esp32, err := Connect(esp32_scan)
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return err
 	}
 
 	errNotify := StartCO2Notify(esp32)
 	if errNotify != nil {
-		fmt.Println("Error: ", errNotify)
 		return err
 	}
 
@@ -54,9 +51,9 @@ func Enable() error {
 func Scan() (bluetooth.ScanResult, error) {
 	var esp32_scan bluetooth.ScanResult
 	// Start scanning.
-	println("Scanning...")
+	slog.Info("Scanning...")
 	err := adapter.Scan(func(adapter *bluetooth.Adapter, device bluetooth.ScanResult) {
-		println("Found device:", device.Address.String(), device.RSSI, device.LocalName())
+		slog.Debug("Found device:", device.Address.String(), device.RSSI, device.LocalName())
 		if device.LocalName() == "Nano ESP32" { // Preferreably use service UUID instaed to identify the device
 			adapter.StopScan()
 			esp32_scan = device
@@ -70,12 +67,12 @@ func Scan() (bluetooth.ScanResult, error) {
 }
 
 func Connect(device bluetooth.ScanResult) (bluetooth.Device, error) {
-	println("Connecting to", device.Address.String(), device.LocalName())
+	slog.Info("Connecting to", device.Address.String(), device.LocalName())
 	esp32, err := adapter.Connect(device.Address, bluetooth.ConnectionParams{}) // Adjust parameters for battery optimisation
 	if err != nil {
 		return esp32, err
 	}
-	println("Connection successful.")
+	slog.Info("Connection successful.")
 	return esp32, nil
 }
 
@@ -116,7 +113,9 @@ func notificationCO2Callback(buf []byte) {
 	}
 
 	co2CurrentValue = uint16(buf[0])<<8 | uint16(buf[1])
-	fmt.Printf("notification: %08b %d\n", buf, co2CurrentValue)
+
+	logstr := fmt.Sprintf("notify CO2: %08b %d\n", buf, co2CurrentValue)
+	slog.Debug(logstr)
 }
 
 func must(action string, err error) {

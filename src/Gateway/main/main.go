@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"log/slog"
 
 	"tinygo.org/x/bluetooth"
 
@@ -11,11 +13,17 @@ import (
 var adapter = bluetooth.DefaultAdapter
 
 func main() {
+	for _, v := range os.Args {
+		if v == "--debug" {
+			slog.SetLogLoggerLevel(slog.LevelDebug)
+		}
+	}
+
 	// Start BLE module
 	err := ble.Start()
 	if err != nil {
-		fmt.Println("Failed to start BLE module")
-		fmt.Println("Error: ", err)
+		slog.Error("Failed to start BLE module")
+		slog.Error("Error: ", err)
 	}
 
 	//read text from the console
