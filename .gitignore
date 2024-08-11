@@ -29,3 +29,6 @@ go.work
 
 # zed editor config
 .zed/
+
+# sqlite db files
+*.db
