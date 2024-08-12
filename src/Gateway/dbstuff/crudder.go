@@ -11,7 +11,7 @@ var initialized bool
 var Q query.Query
 
 func Connect() error {
-	dbInstance, err := gorm.Open(sqlite.Open("../sensor_log.db"), &gorm.Config{})
+	dbInstance, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	if err != nil {
 		return err
 	}
