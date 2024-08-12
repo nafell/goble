@@ -8,7 +8,8 @@ import (
 )
 
 var adapter = bluetooth.DefaultAdapter
-var co2CurrentValue uint16
+var Co2CurrentValue uint16
+var HasValidValue bool
 
 func Start() error {
 	// Enable BLE interface.
@@ -112,14 +113,9 @@ func notificationCO2Callback(buf []byte) {
 		return
 	}
 
-	co2CurrentValue = uint16(buf[0])<<8 | uint16(buf[1])
+	Co2CurrentValue = uint16(buf[0])<<8 | uint16(buf[1])
+	HasValidValue = true
 
-	logstr := fmt.Sprintf("notify CO2: %08b %d\n", buf, co2CurrentValue)
+	logstr := fmt.Sprintf("notify CO2: %08b %d\n", buf, Co2CurrentValue)
 	slog.Debug(logstr)
-}
-
-func must(action string, err error) {
-	if err != nil {
-		panic("failed to " + action + ": " + err.Error())
-	}
 }
