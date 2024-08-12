@@ -2,9 +2,11 @@ package dbstuff
 
 import (
 	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 	"gorm.io/gen"
+	"gorm.io/gorm"
 )
+
+const dbPath string = "../sensorlog.db"
 
 func Generate() error {
 	g := gen.NewGenerator(gen.Config{
@@ -15,7 +17,7 @@ func Generate() error {
 		FieldNullable:     true,
 	})
 
-	db, err := gorm.Open(sqlite.Open("../sensor_log.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	if err != nil {
 		return err
 	}
