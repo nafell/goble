@@ -16,7 +16,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"github.com/nafell/goble_gateway/model"
+	"github.com/nafell/goble_gateway/dbstuff/model"
 )
 
 func newSensorLogEntry(db *gorm.DB, opts ...gen.DOOption) sensorLogEntry {
