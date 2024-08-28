@@ -1,5 +1,6 @@
 # Goble
-is a Go BLE IoT System that monitors room environment values and shows them to users in a graphically interesting manner.
+Goble is a Go/C++ based BLE IoT System that monitors room environment values and shows them to users in a graphically interesting manner.
+Uses Bluetooth for edge conenction, Socket for backend/frontend data sending.
 
 ## How to use
 You will need:
