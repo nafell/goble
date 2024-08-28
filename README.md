@@ -8,5 +8,7 @@ You will need:
   - **Arduino IDE** for flashing the program to the board.
 - **MHz-19c** CO2 sensor
 
-## Architecture
+## Docs
+### Architecture (ja_jp)
 ![architecture diagram](/docs/architecture.drawio.png)
+[drawio file](/docs/architecture.drawio)
