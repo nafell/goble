@@ -13,3 +13,11 @@ You will need:
 ### Architecture (ja_jp)
 ![architecture diagram](/docs/architecture.drawio.png)
 [drawio file](/docs/architecture.drawio)
+
+## Running Sample
+Sensor node:  
+![Sensor node](/docs/additional_items/mhz19c.webp)
+
+Sensor values(ppm) shown on PC sent via Bluetooth notify signal.  
+This will be replaced by a more helpful GUI.  
+![sensor log](/docs/additional_items/sensorlog.png)
