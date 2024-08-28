@@ -32,3 +32,6 @@ go.work
 
 # sqlite db files
 *.db
+
+# draw.io bkp files
+.$*drawio.bkp
