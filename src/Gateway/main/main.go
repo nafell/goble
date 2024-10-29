@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/nafell/goble_gateway/ble"
@@ -44,9 +45,20 @@ func main() {
 }
 
 func args() {
-	for _, v := range os.Args {
+	for i, v := range os.Args {
 		if v == "--debug" {
 			slog.SetLogLoggerLevel(slog.LevelDebug)
+		}
+		if v == "--emulator" {
+			startValueArg := os.Args[i+1]
+			startValue, error := strconv.Atoi(startValueArg)
+			if error != nil {
+				slog.Info("Emulator initial value not specified, using default value.")
+				startValue = 0
+			} else {
+				slog.Info("Starting Emulator with initial value of " + startValueArg)
+			}
+			ble.StartEmulator(time.Duration(500*time.Millisecond), startValue)
 		}
 		if v == "--gen" {
 			slog.SetLogLoggerLevel(slog.LevelDebug)

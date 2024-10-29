@@ -119,3 +119,11 @@ func notificationCO2Callback(buf []byte) {
 	logstr := fmt.Sprintf("notify CO2: %08b %d\n", buf, Co2CurrentValue)
 	slog.Debug(logstr)
 }
+
+func EmulateCO2Callback(dummyValue int) {
+	// convert int to byte array by hardcode bitmask and bitshift
+	msb := byte((dummyValue & 0xFF00) >> 8)
+	lsb := byte(dummyValue & 0x00FF)
+
+	notificationCO2Callback([]byte{msb, lsb})
+}
